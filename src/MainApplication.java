@@ -6,6 +6,8 @@ import javafx.scene.Scene;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FilenameUtils;
+import javafx.scene.image.Image;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 
@@ -21,6 +23,11 @@ public class MainApplication extends Application {
     @Override
     public void start(Stage primaryStage) throws IOException {
         Stage mainStage = primaryStage;
+
+        // Set the application icon
+        String iconPath = "resources/icon.png"; // Path relative to the resources directory
+        Image iconImage = new Image(getClass().getResourceAsStream(iconPath));
+        primaryStage.getIcons().add(iconImage);
 
         // Open the file chooser window directly...
         chooseJSON = new FileChooser();
