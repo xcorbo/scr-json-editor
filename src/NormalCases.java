@@ -1,6 +1,7 @@
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -37,7 +38,7 @@ public class NormalCases {
 
         // Make the WebView Background Black + set temporary text
         // Load Contents into the WebView
-        String tempTextPreview = "<html><body bgcolor='#000000'></body></html";
+        String tempTextPreview = "<html><body bgcolor='#000000'></body></html>";
         WebEngine webEngine = previewTextWebView.getEngine();
         webEngine.loadContent(tempTextPreview);
 
@@ -227,6 +228,8 @@ public class NormalCases {
 
         // Load Contents into the WebView
         WebEngine webEngine = previewTextWebView.getEngine();
+        webEngine.setUserStyleSheetLocation("data:text/css;charset=utf-8," + HTMLString.loadFontCSS());
+        Platform.runLater(() -> webEngine.setUserStyleSheetLocation("data:text/css;charset=utf-8," + HTMLString.loadFontCSS()));
         webEngine.loadContent(HTMLStringToPreview);
         }
     }

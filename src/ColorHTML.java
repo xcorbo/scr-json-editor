@@ -1,6 +1,6 @@
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+import org.apache.commons.io.IOUtils;
+
+import java.io.InputStream;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
@@ -48,8 +48,7 @@ public class ColorHTML {
         String prevCode = "";
         String HTMLString = "<html><body bgcolor='#000000'><style>" + fontCSS + "</style>";
         String HTMLColor = "";
-        String hotkey = String.valueOf(testString.charAt(0));
-        for (int i = 1; i < testString.length(); i++){
+        for (int i = 0; i < testString.length(); i++){
             if(String.valueOf(testString.charAt(i)).equals("\\")){
                 if(String.valueOf(testString.charAt(i)).equals("\\") && String.valueOf(testString.charAt(i+1)).equals("n")){
                     HTMLString += "<br></br>";
@@ -73,11 +72,11 @@ public class ColorHTML {
         return HTMLString;
     }
 
-    private String loadFontCSS() {
+    public String loadFontCSS() {
         try {
             // Load the custom font CSS from the font file
-            Path fontPath = Paths.get(getClass().getResource("/fonts/Kostar.ttf").toURI());
-            byte[] fontBytes = Files.readAllBytes(fontPath);
+            InputStream fontStream = getClass().getResourceAsStream("/fonts/Kostar.ttf");
+            byte[] fontBytes = IOUtils.toByteArray(fontStream);
             String fontBase64 = Base64.getEncoder().encodeToString(fontBytes);
 
             // Generate the CSS to apply the custom font
