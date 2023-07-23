@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="150.0" prefWidth="450.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ErrorUnsupportedFile">
+   <children>
+      <Button fx:id="errorUnsupportedFileOpenButton" layoutX="179.0" layoutY="110.0" mnemonicParsing="false" onAction="#onErrorUnsupportedFileButtonClick" text="Open New File" />
+      <Label fx:id="errorUnsupportedFileLabel" layoutX="14.0" layoutY="5.0" prefHeight="99.0" prefWidth="424.0" text="Label" wrapText="true" />
+   </children>
+</AnchorPane>

@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.web.*?>
+
+<VBox id="jsonEditContainer" alignment="CENTER" spacing="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NormalCases">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+    <children>
+        <Label id="stringsLabel" text="Strings:">
+            <VBox.margin>
+                <Insets left="-580.0" />
+            </VBox.margin></Label>
+        <SplitPane dividerPositions="0.29797979797979796" prefHeight="480.0" prefWidth="640.0">
+            <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <ListView id="stringsList" fx:id="stringsListFX" editable="true" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleItemClicksStringsListFX" prefHeight="478.0" prefWidth="187.0" />
+                    </children>
+                </AnchorPane>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                    <children>
+                        <SplitPane dividerPositions="0.13884228187919465" layoutY="1.0" orientation="VERTICAL" prefHeight="478.0" prefWidth="446.0">
+                            <items>
+                                <AnchorPane id="stringPreviewPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="445.0" style="-fx-background-color: #000;">
+                                    <children>
+                              <WebView fx:id="previewTextWebView" prefHeight="258.0" prefWidth="446.0" />
+                                        <Label id="stringPreview" fx:id="stringPreviewFX" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="425.0" text="(no file selected...)" textFill="WHITE" wrapText="true" />
+                                    </children></AnchorPane>
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                    <children>
+                                        <Label id="idLabel" layoutX="21.0" layoutY="82.0" text="id:" />
+                                        <Label id="labelLabel" layoutX="21.0" layoutY="118.0" text="label:" />
+                                        <Label id="valueLabel" layoutX="21.0" layoutY="155.0" text="value:" />
+                                        <TextField id="idInput" fx:id="idTextFieldFX" disable="true" layoutX="66.0" layoutY="78.0" prefHeight="26.0" prefWidth="362.0" />
+                                        <TextField id="labelInput" fx:id="labelTextFieldFX" disable="true" layoutX="66.0" layoutY="114.0" prefHeight="26.0" prefWidth="362.0" />
+                                        <TextField id="valueInput" fx:id="valueTextFieldFX" disable="true" layoutX="66.0" layoutY="151.0" onKeyTyped="#handleTypingValuePreview" prefHeight="26.0" prefWidth="362.0" />
+                                        <Label id="colorTagLabel" layoutX="66.0" layoutY="14.0" text="Color Tag:" />
+                                        <ComboBox id="colorTagComboBox" layoutX="66.0" layoutY="32.0" prefHeight="26.0" prefWidth="187.0" />
+                                        <Button id="openButton" fx:id="openButtonFX" layoutX="278.0" layoutY="345.0" mnemonicParsing="false" onAction="#onOpenButtonClick" prefHeight="26.0" prefWidth="52.0" text="Add" />
+                                        <TextArea fx:id="formattingTextFX" layoutX="20.0" layoutY="192.0" prefHeight="146.0" prefWidth="408.0" />
+                                        <Button id="saveButton" fx:id="saveButtonFX" layoutX="333.0" layoutY="345.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save" />
+                                        <Button id="closeButton" fx:id="closeButtonFX" layoutX="383.0" layoutY="345.0" mnemonicParsing="false" onAction="#onCloseButtonClick" text="Close" />
+                                        <TextField id="searchTextField" fx:id="searchTextFieldFX" layoutX="18.0" layoutY="345.0" />
+                                        <Button id="searchButton" fx:id="searchButtonFX" layoutX="180.0" layoutY="345.0" mnemonicParsing="false" onAction="#onSearchButtonClick" text="Search" />
+                                    </children></AnchorPane>
+                            </items>
+                        </SplitPane>
+                    </children>
+                </AnchorPane>
+            </items>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+        </SplitPane>
+    </children>
+
+</VBox>
