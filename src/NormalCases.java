@@ -7,6 +7,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import java.io.*;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import javafx.scene.web.WebEngine;
@@ -46,7 +47,8 @@ public class NormalCases {
         if (selectedJSON != null) {
             try {
                 // Create a FileReader to read the selected JSON file
-                FileReader fileReader = new FileReader(selectedJSON);
+                FileInputStream inputStream = new FileInputStream(selectedJSON);
+                InputStreamReader fileReader = new InputStreamReader(inputStream, StandardCharsets.UTF_8);
 
                 // Use Gson to parse the JSON data into a list of JSONData objects
                 Gson gson = new Gson();
@@ -59,6 +61,8 @@ public class NormalCases {
                 populateStrings(stringsJSONArray, selectedJSON);
 
                 // Enable the valueTextFieldFX (if necessary)
+                idTextFieldFX.setDisable(false);
+                labelTextFieldFX.setDisable(false);
                 valueTextFieldFX.setDisable(false);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -152,6 +156,12 @@ public class NormalCases {
         }
     }
 
+    public  void handleRTSearch(){
+    //What to Search
+    String searchArg = searchTextFieldFX.getText();
+    searchFilter(searchArg);
+    }
+
     public  void searchFilter(String sArg){
         // Delete all Items
         stringsListFX.getItems().clear();
@@ -197,6 +207,36 @@ public class NormalCases {
         if (selectedIndex >= 0) {
             JSONObject selectedJSONObject = stringsJSONArray.getJSONObject(selectedIndex);
             selectedJSONObject.put("Value", previewString);
+            stringsListFX.getItems().set(selectedIndex, selectedJSONObject.toString());
+        }
+    }
+
+    @FXML
+    protected void handleTypingIDPreview(){
+        // Assign Value to a string and start parsing it for preview
+        String previewString = idTextFieldFX.getText();
+
+        // Update the selected JSONData object in the JSONArray with the edited value
+        int selectedIndex = stringsListFX.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            JSONObject selectedJSONObject = stringsJSONArray.getJSONObject(selectedIndex);
+            selectedJSONObject.put("id", previewString);
+            stringsListFX.getItems().set(selectedIndex, selectedJSONObject.toString());
+        }
+    }
+
+    @FXML
+    protected void handleTypingKeyPreview(){
+        // Assign Value to a string and start parsing it for preview
+        String previewString = labelTextFieldFX.getText();
+
+        // Update the selected JSONData object in the JSONArray with the edited value
+        int selectedIndex = stringsListFX.getSelectionModel().getSelectedIndex();
+
+        if (selectedIndex >= 0) {
+            JSONObject selectedJSONObject = stringsJSONArray.getJSONObject(selectedIndex);
+            selectedJSONObject.put("Key", previewString);
             stringsListFX.getItems().set(selectedIndex, selectedJSONObject.toString());
         }
     }

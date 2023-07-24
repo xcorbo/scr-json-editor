@@ -46,27 +46,69 @@ public class ColorHTML {
 
         String currCode = "";
         String prevCode = "";
+        int typeCode; // Gonna stablish 0 = nothing, 1 = 0000, 2 = 0001, ... 8 = 0007
         String HTMLString = "<html><body bgcolor='#000000'><style>" + fontCSS + "</style>";
         String HTMLColor = "";
-        for (int i = 0; i < testString.length(); i++){
-            if(String.valueOf(testString.charAt(i)).equals("\\")){
-                if(String.valueOf(testString.charAt(i)).equals("\\") && String.valueOf(testString.charAt(i+1)).equals("n")){
-                    HTMLString += "<br></br>";
-                    i += 2;
-                } else {
-                    if (currCode.equals("")){
-                        currCode = testString.substring(i, i+6);
-                    } else if(testString.substring(i, i+6).equals("\\u0001")){
-                        currCode = prevCode;
+        String hotkey = "";
+
+        // Find what type of string we're dealing with... Going to hard code it a bit..
+        if(String.valueOf(testString.charAt(1)).equals("\\") && String.valueOf(testString.charAt(2)).equals("u")){
+            // Is with hotkey
+            typeCode = Integer.parseInt(String.valueOf(testString.charAt(6))) + 1;
+            hotkey = String.valueOf(testString.charAt(0)).toUpperCase();
+            System.out.println("with code and " + typeCode);
+        } else {
+            // No hotkey
+            typeCode = 0;
+            System.out.println("nothing" + typeCode);
+        }
+
+        // If it's 0, don't skip and all blue, if it's more than 0 then init at char 7 to parse properly
+        if( typeCode == 0){
+            // Along the whole string...
+            for (int i = 0; i < testString.length(); i++){
+                if(String.valueOf(testString.charAt(i)).equals("\\")){
+                    if(String.valueOf(testString.charAt(i)).equals("\\") && String.valueOf(testString.charAt(i+1)).equals("n")){
+                        HTMLString += "<br></br>";
+                        i += 2;
                     } else {
-                        prevCode = currCode;
-                        currCode = testString.substring(i, i+6);
+                        if (currCode.equals("")){
+                            currCode = testString.substring(i, i+6);
+                        } else if(testString.substring(i, i+6).equals("\\u0001")){
+                            currCode = prevCode;
+                        } else {
+                            prevCode = currCode;
+                            currCode = testString.substring(i, i+6);
+                        }
+                        i += 6;
                     }
-                    i += 6;
                 }
+                HTMLColor = colorMap.getOrDefault(currCode, "B8B8E8");
+                HTMLString += "<div style='display: inline; color:#" + HTMLColor + "'>" + testString.charAt(i) + "</div>";
             }
-            HTMLColor = colorMap.getOrDefault(currCode, "B8B8E8");
-            HTMLString += "<div style='display: inline; color:#" + HTMLColor + "'>" + testString.charAt(i) + "</div>";
+        } else {
+            // Along the whole string...
+            for (int i = 7; i < testString.length(); i++){
+                if(String.valueOf(testString.charAt(i)).equals("\\")){
+                    if(String.valueOf(testString.charAt(i)).equals("\\") && String.valueOf(testString.charAt(i+1)).equals("n")){
+                        HTMLString += "<br></br>";
+                        i += 2;
+                    } else {
+                        if (currCode.equals("")){
+                            currCode = testString.substring(i, i+6);
+                        } else if(testString.substring(i, i+6).equals("\\u0001")){
+                            currCode = prevCode;
+                        } else {
+                            prevCode = currCode;
+                            currCode = testString.substring(i, i+6);
+                        }
+                        i += 6;
+                    }
+                }
+                HTMLColor = colorMap.getOrDefault(currCode, "B8B8E8");
+                HTMLString += "<div style='display: inline; color:#" + HTMLColor + "'>" + testString.charAt(i) + "</div>";
+            }
+            HTMLString += "<div style='display: inline; color:#B8B8E8'> [</div><div style='display: inline; color:#DCDC3C'>" + hotkey + "</div><div style='display: inline; color:#B8B8E8'>]</div>";
         }
         HTMLString += "</body></html>";
         return HTMLString;

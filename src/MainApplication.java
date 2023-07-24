@@ -1,5 +1,6 @@
 
 import javafx.application.Application;
+import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -10,6 +11,7 @@ import javafx.scene.image.Image;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 
 public class MainApplication extends Application {
@@ -22,6 +24,7 @@ public class MainApplication extends Application {
 
     @Override
     public void start(Stage primaryStage) throws IOException {
+        // Setting stage
         Stage mainStage = primaryStage;
 
         // Set the application icon
@@ -29,13 +32,23 @@ public class MainApplication extends Application {
         Image iconImage = new Image(getClass().getResourceAsStream(iconPath));
         primaryStage.getIcons().add(iconImage);
 
+        // Load the last opened directory from preferences
+        Preferences prefs = Preferences.userNodeForPackage(MainApplication.class);
+        String lastOpenedDir = prefs.get("lastOpenedDir", System.getProperty("user.home"));
+
+
         // Open the file chooser window directly...
         chooseJSON = new FileChooser();
+        FileChooser.ExtensionFilter jsonFilter = new FileChooser.ExtensionFilter("JSON Files", "*.json");
+        chooseJSON.getExtensionFilters().addAll(jsonFilter);
+        chooseJSON.setInitialDirectory(new File(lastOpenedDir));
         chooseJSON.setTitle("Choose SC: Remastered *.JSON File");
         selectedJSON = chooseJSON.showOpenDialog(null);
 
         // Choose the proper window to go to
-        if (selectedJSON != null) {
+        if (selectedJSON == null) {
+            Platform.exit();
+        } else {
             filename = selectedJSON.getName();
             int validation = validateFileName(filename);
 
@@ -125,7 +138,7 @@ public class MainApplication extends Application {
 
         // Set the scene and show the new stage (error dialog)
         mainStage.setScene(normalCasesScene);
-        mainStage.setTitle("SC: Remastered JSON Editor");
+        mainStage.setTitle("SC: Remastered JSON Editor -- " + filename);
         mainStage.show();
     }
     private void superWrongCase(String filename, int validation, Stage mainStage) throws IOException {
@@ -148,7 +161,17 @@ public class MainApplication extends Application {
         mainStage.show();
     }
 
-    // Dude we're not even using this lmao
+    @Override
+    public void stop() throws Exception {
+        // Save the last opened directory to preferences before the application closes
+        Preferences prefs = Preferences.userNodeForPackage(MainApplication.class);
+        if (selectedJSON != null) {
+            prefs.put("lastOpenedDir", selectedJSON.getParent());
+        }
+
+        super.stop();
+    }
+
     public static void main(String[] args) {
         launch();
     }

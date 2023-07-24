@@ -18,7 +18,7 @@
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <ListView id="stringsList" fx:id="stringsListFX" editable="true" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleItemClicksStringsListFX" prefHeight="478.0" prefWidth="187.0" />
+                        <ListView id="stringsList" fx:id="stringsListFX" editable="true" VBox.vgrow="ALWAYS" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleItemClicksStringsListFX" prefHeight="478.0" prefWidth="187.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                     </children>
                 </AnchorPane>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
@@ -28,23 +28,23 @@
                                 <AnchorPane id="stringPreviewPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="445.0" style="-fx-background-color: #000;">
                                     <children>
                               <WebView fx:id="previewTextWebView" prefHeight="258.0" prefWidth="446.0" />
-                                        <Label id="stringPreview" fx:id="stringPreviewFX" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="425.0" text="(no file selected...)" textFill="WHITE" wrapText="true" />
+                                        <Label id="stringPreview" fx:id="stringPreviewFX" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="425.0" text="(no line selected...)" textFill="WHITE" wrapText="true" />
                                     </children></AnchorPane>
                                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
                                     <children>
                                         <Label id="idLabel" layoutX="21.0" layoutY="82.0" text="id:" />
                                         <Label id="labelLabel" layoutX="21.0" layoutY="118.0" text="label:" />
                                         <Label id="valueLabel" layoutX="21.0" layoutY="155.0" text="value:" />
-                                        <TextField id="idInput" fx:id="idTextFieldFX" disable="true" layoutX="66.0" layoutY="78.0" prefHeight="26.0" prefWidth="362.0" />
-                                        <TextField id="labelInput" fx:id="labelTextFieldFX" disable="true" layoutX="66.0" layoutY="114.0" prefHeight="26.0" prefWidth="362.0" />
-                                        <TextField id="valueInput" fx:id="valueTextFieldFX" disable="true" layoutX="66.0" layoutY="151.0" onKeyTyped="#handleTypingValuePreview" prefHeight="26.0" prefWidth="362.0" />
+                                        <TextField id="idInput" fx:id="idTextFieldFX" disable="true" layoutX="66.0" layoutY="78.0" onKeyReleased="#handleTypingIDPreview" onKeyTyped="#handleTypingIDPreview" prefHeight="26.0" prefWidth="362.0" />
+                                        <TextField id="labelInput" fx:id="labelTextFieldFX" disable="true" layoutX="66.0" layoutY="114.0" onKeyReleased="#handleTypingKeyPreview" onKeyTyped="#handleTypingKeyPreview" prefHeight="26.0" prefWidth="362.0" />
+                                        <TextField id="valueInput" fx:id="valueTextFieldFX" disable="true" layoutX="66.0" layoutY="151.0" onKeyReleased="#handleTypingValuePreview" onKeyTyped="#handleTypingValuePreview" prefHeight="26.0" prefWidth="362.0" />
                                         <Label id="colorTagLabel" layoutX="66.0" layoutY="14.0" text="Color Tag:" />
                                         <ComboBox id="colorTagComboBox" layoutX="66.0" layoutY="32.0" prefHeight="26.0" prefWidth="187.0" />
                                         <Button id="openButton" fx:id="openButtonFX" layoutX="278.0" layoutY="345.0" mnemonicParsing="false" onAction="#onOpenButtonClick" prefHeight="26.0" prefWidth="52.0" text="Add" />
                                         <TextArea fx:id="formattingTextFX" layoutX="20.0" layoutY="192.0" prefHeight="146.0" prefWidth="408.0" />
                                         <Button id="saveButton" fx:id="saveButtonFX" layoutX="333.0" layoutY="345.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save" />
                                         <Button id="closeButton" fx:id="closeButtonFX" layoutX="383.0" layoutY="345.0" mnemonicParsing="false" onAction="#onCloseButtonClick" text="Close" />
-                                        <TextField id="searchTextField" fx:id="searchTextFieldFX" layoutX="18.0" layoutY="345.0" />
+                                        <TextField id="searchTextField" fx:id="searchTextFieldFX" layoutX="18.0" layoutY="345.0" onKeyTyped="#handleRTSearch" />
                                         <Button id="searchButton" fx:id="searchButtonFX" layoutX="180.0" layoutY="345.0" mnemonicParsing="false" onAction="#onSearchButtonClick" text="Search" />
                                     </children></AnchorPane>
                             </items>
