@@ -8,7 +8,6 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 import org.apache.commons.io.FilenameUtils;
 import javafx.scene.image.Image;
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.prefs.Preferences;
@@ -21,11 +20,13 @@ public class MainApplication extends Application {
     String filename;
     FileChooser chooseJSON;
     File selectedJSON;
+    Stage lolstage;
 
     @Override
     public void start(Stage primaryStage) throws IOException {
         // Setting stage
         Stage mainStage = primaryStage;
+        lolstage = mainStage;
 
         // Set the application icon
         String iconPath = "resources/icon.png"; // Path relative to the resources directory
@@ -67,6 +68,7 @@ public class MainApplication extends Application {
             }
         }
     }
+
     private int validateFileName(String filename) throws IOException {
         // Get the extension
         String extension = FilenameUtils.getExtension(filename);

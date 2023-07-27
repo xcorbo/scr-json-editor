@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.web.*?>
 
-<VBox id="jsonEditContainer" alignment="CENTER" spacing="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NormalCases">
+<VBox id="jsonEditContainer" alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="675.0" prefWidth="850.0" spacing="5.0" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="NormalCases">
     <padding>
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
     </padding>
@@ -14,38 +14,47 @@
             <VBox.margin>
                 <Insets left="-580.0" />
             </VBox.margin></Label>
-        <SplitPane dividerPositions="0.29797979797979796" prefHeight="480.0" prefWidth="640.0">
+        <SplitPane dividerPositions="0.29797979797979796" prefHeight="600.0" prefWidth="640.0">
             <items>
                 <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                     <children>
-                        <ListView id="stringsList" fx:id="stringsListFX" editable="true" VBox.vgrow="ALWAYS" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleItemClicksStringsListFX" prefHeight="478.0" prefWidth="187.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <ListView id="stringsList" fx:id="stringsListFX" editable="true" layoutY="-84.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#handleItemClicksStringsListFX" prefHeight="562.0" prefWidth="238.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" VBox.vgrow="ALWAYS" />
                     </children>
                 </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="530.0" prefWidth="565.0">
                     <children>
-                        <SplitPane dividerPositions="0.13884228187919465" layoutY="1.0" orientation="VERTICAL" prefHeight="478.0" prefWidth="446.0">
+                        <SplitPane dividerPositions="0.13884228187919465" layoutY="1.0" orientation="VERTICAL" prefHeight="599.0" prefWidth="566.0">
                             <items>
-                                <AnchorPane id="stringPreviewPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="400.0" prefWidth="445.0" style="-fx-background-color: #000;">
+                                <AnchorPane id="stringPreviewPanel" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="63.0" prefWidth="566.0" style="-fx-background-color: #000;">
                                     <children>
-                              <WebView fx:id="previewTextWebView" prefHeight="258.0" prefWidth="446.0" />
-                                        <Label id="stringPreview" fx:id="stringPreviewFX" alignment="TOP_LEFT" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="425.0" text="(no line selected...)" textFill="WHITE" wrapText="true" />
+                              <WebView fx:id="previewTextWebView" layoutX="8.0" prefHeight="258.0" prefWidth="544.0" />
+                                        <Label id="stringPreview" fx:id="stringPreviewFX" alignment="TOP_LEFT" layoutX="9.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="544.0" text="(no line selected...)" textFill="WHITE" wrapText="true" />
                                     </children></AnchorPane>
-                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
+                                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="459.0" prefWidth="565.0">
                                     <children>
                                         <Label id="idLabel" layoutX="21.0" layoutY="82.0" text="id:" />
                                         <Label id="labelLabel" layoutX="21.0" layoutY="118.0" text="label:" />
                                         <Label id="valueLabel" layoutX="21.0" layoutY="155.0" text="value:" />
-                                        <TextField id="idInput" fx:id="idTextFieldFX" disable="true" layoutX="66.0" layoutY="78.0" onKeyReleased="#handleTypingIDPreview" onKeyTyped="#handleTypingIDPreview" prefHeight="26.0" prefWidth="362.0" />
-                                        <TextField id="labelInput" fx:id="labelTextFieldFX" disable="true" layoutX="66.0" layoutY="114.0" onKeyReleased="#handleTypingKeyPreview" onKeyTyped="#handleTypingKeyPreview" prefHeight="26.0" prefWidth="362.0" />
-                                        <TextField id="valueInput" fx:id="valueTextFieldFX" disable="true" layoutX="66.0" layoutY="151.0" onKeyReleased="#handleTypingValuePreview" onKeyTyped="#handleTypingValuePreview" prefHeight="26.0" prefWidth="362.0" />
+                                        <TextField id="idInput" fx:id="idTextFieldFX" disable="true" layoutX="66.0" layoutY="78.0" onKeyReleased="#handleTypingIDPreview" onKeyTyped="#handleTypingIDPreview" prefHeight="26.0" prefWidth="488.0" />
+                                        <TextField id="labelInput" fx:id="labelTextFieldFX" disable="true" layoutX="66.0" layoutY="114.0" onKeyReleased="#handleTypingKeyPreview" onKeyTyped="#handleTypingKeyPreview" prefHeight="26.0" prefWidth="488.0" />
+                                        <TextField id="valueInput" fx:id="valueTextFieldFX" disable="true" layoutX="66.0" layoutY="151.0" onKeyReleased="#handleTypingValuePreview" onKeyTyped="#handleTypingValuePreview" prefHeight="26.0" prefWidth="488.0" />
                                         <Label id="colorTagLabel" layoutX="66.0" layoutY="14.0" text="Color Tag:" />
                                         <ComboBox id="colorTagComboBox" layoutX="66.0" layoutY="32.0" prefHeight="26.0" prefWidth="187.0" />
-                                        <Button id="openButton" fx:id="openButtonFX" layoutX="278.0" layoutY="345.0" mnemonicParsing="false" onAction="#onOpenButtonClick" prefHeight="26.0" prefWidth="52.0" text="Add" />
-                                        <TextArea fx:id="formattingTextFX" layoutX="20.0" layoutY="192.0" prefHeight="146.0" prefWidth="408.0" />
-                                        <Button id="saveButton" fx:id="saveButtonFX" layoutX="333.0" layoutY="345.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save" />
-                                        <Button id="closeButton" fx:id="closeButtonFX" layoutX="383.0" layoutY="345.0" mnemonicParsing="false" onAction="#onCloseButtonClick" text="Close" />
-                                        <TextField id="searchTextField" fx:id="searchTextFieldFX" layoutX="18.0" layoutY="345.0" onKeyTyped="#handleRTSearch" />
-                                        <Button id="searchButton" fx:id="searchButtonFX" layoutX="180.0" layoutY="345.0" mnemonicParsing="false" onAction="#onSearchButtonClick" text="Search" />
+                              <Button layoutX="261.0" layoutY="32.0" mnemonicParsing="false" text="Colors..." />
+                                        <Button id="openButton" fx:id="openButtonFX" layoutX="280.0" layoutY="468.0" mnemonicParsing="false" onAction="#onOpenButtonClick" prefHeight="26.0" prefWidth="52.0" text="Add" />
+                                        <TextArea fx:id="formattingTextFX" disable="true" layoutX="301.0" layoutY="192.0" opacity="0.0" prefHeight="146.0" prefWidth="250.0" />
+                                        <Button id="saveButton" fx:id="saveButtonFX" layoutX="445.0" layoutY="468.0" mnemonicParsing="false" onAction="#onSaveButtonClick" text="Save" />
+                                        <Button id="closeButton" fx:id="closeButtonFX" layoutX="501.0" layoutY="468.0" mnemonicParsing="false" onAction="#onCloseButtonClick" text="Close" />
+                                        <Button id="searchButton" fx:id="searchButtonFX" layoutX="208.0" layoutY="468.0" mnemonicParsing="false" onAction="#onSearchButtonClick" text="Search" />
+                                        <TextField id="searchTextField" fx:id="searchTextFieldFX" layoutX="20.0" layoutY="468.0" onKeyTyped="#handleRTSearch" />
+                              <Button fx:id="openNewButtonFX" layoutX="383.0" layoutY="468.0" mnemonicParsing="false" onAction="#onOpenNewButtonFXClick" text="Open" />
+                              <RadioButton fx:id="radioButton0" accessibleHelp="lol test" accessibleRoleDescription="sf" accessibleText="test 1" disable="true" layoutX="66.0" layoutY="192.0" mnemonicParsing="false" onMouseEntered="#tooltipHover" text="No tag, only label" />
+                              <RadioButton fx:id="radioButton1" disable="true" layoutX="66.0" layoutY="213.0" mnemonicParsing="false" text="1 - Build Unit" />
+                              <RadioButton fx:id="radioButton2" disable="true" layoutX="66.0" layoutY="234.0" mnemonicParsing="false" text="2 - Upgrade Research" />
+                              <RadioButton fx:id="radioButton3" disable="true" layoutX="66.0" layoutY="255.0" mnemonicParsing="false" text="3 - Spellcasting" />
+                              <RadioButton fx:id="radioButton4" disable="true" layoutX="66.0" layoutY="276.0" mnemonicParsing="false" text="4 - Technology Research" />
+                              <RadioButton fx:id="radioButton5" disable="true" layoutX="66.0" layoutY="297.0" mnemonicParsing="false" text="5 - Resource Cost" />
+                              <RadioButton fx:id="radioButton7" disable="true" layoutX="66.0" layoutY="318.0" mnemonicParsing="false" text="7 - Commands" />
                                     </children></AnchorPane>
                             </items>
                         </SplitPane>

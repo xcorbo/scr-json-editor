@@ -1,14 +1,15 @@
 import org.apache.commons.io.IOUtils;
-
 import java.io.InputStream;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ColorHTML {
-    public String colorPreview(String testString){
+
+    public String colorPreview(String testString, NormalCases normalCases) {
         // Loading Font Code
         String fontCSS = loadFontCSS();
+        NormalCases updateButtons = normalCases;
 
         // Hash Map, sorry, idk how else to do it LMAO
         Map<String, String> colorMap = new HashMap<>();
@@ -52,19 +53,22 @@ public class ColorHTML {
         String hotkey = "";
 
         // Find what type of string we're dealing with... Going to hard code it a bit..
-        if(String.valueOf(testString.charAt(1)).equals("\\") && String.valueOf(testString.charAt(2)).equals("u")){
+        if(String.valueOf(testString.charAt(0)).equals("\\") && String.valueOf(testString.charAt(1)).equals("u")){
+            typeCode = 9;
+            updateButtons.updateButtons(0);
+        } else if(String.valueOf(testString.charAt(1)).equals("\\") && String.valueOf(testString.charAt(2)).equals("u")){
             // Is with hotkey
-            typeCode = Integer.parseInt(String.valueOf(testString.charAt(6))) + 1;
+            typeCode = Integer.parseInt(String.valueOf(testString.charAt(6))); // had +1?
+            updateButtons.updateButtons(typeCode);
             hotkey = String.valueOf(testString.charAt(0)).toUpperCase();
-            System.out.println("with code and " + typeCode);
         } else {
             // No hotkey
             typeCode = 0;
-            System.out.println("nothing" + typeCode);
+            updateButtons.updateButtons(0);
         }
 
         // If it's 0, don't skip and all blue, if it's more than 0 then init at char 7 to parse properly
-        if( typeCode == 0){
+        if( typeCode == 0 || typeCode == 9){
             // Along the whole string...
             for (int i = 0; i < testString.length(); i++){
                 if(String.valueOf(testString.charAt(i)).equals("\\")){
@@ -93,6 +97,9 @@ public class ColorHTML {
                     if(String.valueOf(testString.charAt(i)).equals("\\") && String.valueOf(testString.charAt(i+1)).equals("n")){
                         HTMLString += "<br></br>";
                         i += 2;
+                    } else if(String.valueOf(testString.charAt(i)).equals("\\") && String.valueOf(testString.charAt(i+6)).equals("9")){
+                        HTMLString += "<style='display: inline; tab-size: 4'>....</style>";
+                        i += 6;
                     } else {
                         if (currCode.equals("")){
                             currCode = testString.substring(i, i+6);

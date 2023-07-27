@@ -1,4 +1,3 @@
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import javafx.application.Platform;
@@ -10,13 +9,20 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
+import javafx.scene.control.TextField;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import org.json.*;
 import static javafx.application.Platform.exit;
 
+
 public class NormalCases {
     JSONArray stringsJSONArray = new JSONArray();
+    @FXML
+    private RadioButton radioButton0, radioButton1, radioButton2, radioButton3, radioButton4, radioButton5, radioButton7;
     @FXML
     private TextArea formattingTextFX; // This is where i temp debug shit for now
     @FXML
@@ -32,6 +38,8 @@ public class NormalCases {
 
     // General JSON accesible to everywhere
     public File toWriteJSON;
+
+
 
     public void getJSON(File selectedJSON){
         // Set the JSON to the public File
@@ -64,15 +72,24 @@ public class NormalCases {
                 idTextFieldFX.setDisable(false);
                 labelTextFieldFX.setDisable(false);
                 valueTextFieldFX.setDisable(false);
+                tooltipHover();
             } catch (IOException e) {
                 e.printStackTrace();
             }
         }
     }
+    @FXML
+    protected void tooltipHover(){
+        // TODO Tool tips...
+    }
 
     @FXML
     protected void onCloseButtonClick(){
         exit();
+    }
+    @FXML
+    protected void onOpenNewButtonFXClick() {
+        // TODO Open Dialog
     }
 
     @FXML
@@ -262,7 +279,7 @@ public class NormalCases {
         stringPreviewFX.setText("");
         // Init HTMLColor Class + call the function to color the string
         ColorHTML HTMLString = new ColorHTML();
-        String HTMLStringToPreview = HTMLString.colorPreview(stringToPreview);
+        String HTMLStringToPreview = HTMLString.colorPreview(stringToPreview, this);
 
         // Font type maybe
 
@@ -271,5 +288,37 @@ public class NormalCases {
         webEngine.setUserStyleSheetLocation("data:text/css;charset=utf-8," + HTMLString.loadFontCSS());
         Platform.runLater(() -> webEngine.setUserStyleSheetLocation("data:text/css;charset=utf-8," + HTMLString.loadFontCSS()));
         webEngine.loadContent(HTMLStringToPreview);
+        }
+        public void updateButtons(int x){
+        // WIP because there's better ways to do this but for now, hardcoded...
+            if (x == 0){
+                radioButton0.setSelected(true);
+                radioButton1.setSelected(false); radioButton2.setSelected(false); radioButton3.setSelected(false); radioButton4.setSelected(false); radioButton5.setSelected(false);  radioButton7.setSelected(false);
+            }
+            if (x == 1){
+                radioButton1.setSelected(true);
+                radioButton0.setSelected(false); radioButton2.setSelected(false); radioButton3.setSelected(false); radioButton4.setSelected(false); radioButton5.setSelected(false);  radioButton7.setSelected(false);
+
+            }
+            if (x == 2){
+                radioButton2.setSelected(true);
+                radioButton0.setSelected(false); radioButton1.setSelected(false); radioButton3.setSelected(false); radioButton4.setSelected(false); radioButton5.setSelected(false);  radioButton7.setSelected(false);
+            }
+            if (x == 3){
+                radioButton3.setSelected(true);
+                radioButton0.setSelected(false); radioButton1.setSelected(false); radioButton2.setSelected(false); radioButton4.setSelected(false); radioButton5.setSelected(false);  radioButton7.setSelected(false);
+            }
+            if (x == 4){
+                radioButton4.setSelected(true);
+                radioButton0.setSelected(false); radioButton1.setSelected(false); radioButton2.setSelected(false); radioButton3.setSelected(false); radioButton5.setSelected(false);  radioButton7.setSelected(false);
+            }
+            if (x == 5){
+                radioButton5.setSelected(true);
+                radioButton1.setSelected(false); radioButton2.setSelected(false); radioButton3.setSelected(false); radioButton4.setSelected(false); radioButton0.setSelected(false);  radioButton7.setSelected(false);
+            }
+            if (x == 7){
+                radioButton7.setSelected(true);
+                radioButton1.setSelected(false); radioButton2.setSelected(false); radioButton3.setSelected(false); radioButton4.setSelected(false); radioButton5.setSelected(false);  radioButton0.setSelected(false);
+            }
         }
     }
