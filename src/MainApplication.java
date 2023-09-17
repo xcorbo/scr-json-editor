@@ -37,6 +37,12 @@ public class MainApplication extends Application {
         Preferences prefs = Preferences.userNodeForPackage(MainApplication.class);
         String lastOpenedDir = prefs.get("lastOpenedDir", System.getProperty("user.home"));
 
+        // Check if the lastOpenedDir is a valid directory
+        File lastOpenedDirFile = new File(lastOpenedDir);
+        if (!lastOpenedDirFile.exists() || !lastOpenedDirFile.isDirectory()) {
+            // The directory does not exist or is not a directory, set a default directory
+            lastOpenedDir = System.getProperty("user.home"); // You can choose any default directory here
+        }
 
         // Open the file chooser window directly...
         chooseJSON = new FileChooser();
