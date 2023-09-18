@@ -17,6 +17,7 @@ public class MainApplication extends Application {
     // Init & Primitive Definitions
     ErrorUnsupportedFile errorUnsupportedFileDialog;
     NormalCases normalCasesDialog;
+    SfxDialog SFXCasesDialog;
     String filename;
     FileChooser chooseJSON;
     File selectedJSON;
@@ -66,10 +67,13 @@ public class MainApplication extends Application {
                 uiCases(filename, validation, mainStage);
             }
             if (validation == 2){
+                SFXCases(selectedJSON, mainStage);
+            }
+            if (validation == 3){
                 filename = selectedJSON.getAbsolutePath();
                 normalCases(selectedJSON, mainStage);
             }
-            if (validation == 3){
+            if (validation == 4){
                 superWrongCase(filename, validation, mainStage);
             }
         }
@@ -80,14 +84,16 @@ public class MainApplication extends Application {
         String extension = FilenameUtils.getExtension(filename);
 
         // Validate files by using extension. Special cases, ui cases and normal cases, then everything else
-        if (filename.equals("flc.json") || filename.equals("sfx.json") || filename.equals("skin.json") || filename.equals("skins.json")  || filename.equals("badnames.json")){
+        if (filename.equals("flc.json") || filename.equals("skin.json") || filename.equals("skins.json")  || filename.equals("badnames.json")){
             return 0;
         } else if (FilenameUtils.getBaseName(filename).endsWith(".ui") && FilenameUtils.getExtension(filename).equals("json")){
             return 1;
-        } else if (extension.equals("json")){
+        } else if (filename.equals("sfx.json")){
             return 2;
-        } else {
+        } else if (extension.equals("json")){
             return 3;
+        } else {
+            return 4;
         }
     }
     private void specialCases(String filename, int validation, Stage mainStage) throws IOException {
@@ -149,6 +155,27 @@ public class MainApplication extends Application {
         mainStage.setTitle("SC: Remastered JSON Editor -- " + filename);
         mainStage.show();
     }
+
+    private void SFXCases(File selectedJSON, Stage mainStage) throws IOException {
+        // Load whatever FXML we have to
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("sfx-dialog.fxml"));
+
+        // Get root parent and load controller
+        Parent SFXCasesRoot = loader.load();
+        SFXCasesDialog = loader.getController();
+
+        // Pass arguments to error function in the error dialog
+        SFXCasesDialog.test("lol pass");
+
+        // Create a new stage for the error dialog scene
+        Scene SFXCasesScene = new Scene(SFXCasesRoot);
+
+        // Set the scene and show the new stage (error dialog)
+        mainStage.setScene(SFXCasesScene);
+        mainStage.setTitle("SC: Remastered JSON Editor -- " + filename);
+        mainStage.show();
+    }
+
     private void superWrongCase(String filename, int validation, Stage mainStage) throws IOException {
         // Load whatever FXML we have to
         FXMLLoader loader = new FXMLLoader(getClass().getResource("error-unsupported-file.fxml"));
