@@ -90,7 +90,7 @@ public class MainApplication extends Application {
             return 1;
         } else if (filename.equals("sfx.json")){
             return 2;
-        } else if (extension.equals("json")){
+        } else if (filename.equals("stat_txt.json")){
             return 3;
         } else {
             return 4;
@@ -165,7 +165,7 @@ public class MainApplication extends Application {
         SFXCasesDialog = loader.getController();
 
         // Pass arguments to error function in the error dialog
-        SFXCasesDialog.test("lol pass");
+        SFXCasesDialog.getJSON_sfx(selectedJSON);
 
         // Create a new stage for the error dialog scene
         Scene SFXCasesScene = new Scene(SFXCasesRoot);
