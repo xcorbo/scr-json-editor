@@ -1,45 +1,62 @@
 import com.google.gson.*;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import org.json.JSONObject;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
-
 import static javafx.application.Platform.exit;
-
-
-
 
 public class SfxDialog {
 
-
-    @FXML
-    public Label SFXLabelDebug;
-
+    // Tree Setup
     @FXML
     private TreeView<String> treeViewFX_sfx;
     private TreeItem<String> rootItem;
 
+    // Content Fields
+    @FXML
+    public TextField idTextField_sfx, priorityTextField_sfx, lengthAdjustTextField_sfx, minVolumeTextField_sfx;
+    public CheckBox preloadCheckBox_sfx, unitSpeechCheckBox_sfx, oneAtATimeCheckBox_sfx, neverPreemptCheckBox_sfx;
 
-    // Bottom Nav buttons
+    // App Settings Buttons
+    @FXML
+    public RadioButton idRadioButton_sfx, filePathRadioButton_sfx;
+
+    // Bottom Nav Buttons
     @FXML
     public TextField searchTextField_sfx;
     @FXML
     public Button searchButton_sfx, openButton_sfx, saveButton_sfx, closeButton_sfx;
 
-    // Top vars
+    // The variables above all
     public File toWriteJSON;
+    int idOrNot = 0; // Setting to toggle tree view by id = 0, filePath = 1
 
+    // JSONObject here because, sure, why not.
+    File globalJSON;
 
 
     public void getJSON_sfx(File selectedJSON){
-        // Set the JSON to the public File
+        // Initial JSON TO BE UNCHANGED EVER
+        globalJSON = selectedJSON;
+
+        // JSON that will be allowed to write stuff into +  will be outputed later
         toWriteJSON = selectedJSON;
 
-        // Start program
+        // Check if toggle is set, if not, set default to display tree by id
+        if(filePathRadioButton_sfx.isSelected() == false && idRadioButton_sfx.isSelected() == false ){
+            idRadioButton_sfx.setSelected(true);
+        }
+
+
+        // Get the JSON from FILE and start the tree root + init the population functions
+        // Checking if it has contents...
         if (selectedJSON != null) {
+
             try (FileReader reader = new FileReader(selectedJSON)) {
-                // Create the root item
+
+                // Create the root called sfx. This is hardcoded, it shouldn't be.
                 rootItem = new TreeItem<>("sfx");
                 treeViewFX_sfx.setRoot(rootItem);
 
@@ -48,22 +65,27 @@ public class SfxDialog {
                 JsonElement jsonElement = parser.parse(reader);
                 JsonObject jsonObject = jsonElement.getAsJsonObject();
 
+                // Populate the sfx root item
                 populateSfx(rootItem, jsonObject);
 
+                // Show the root or not, in this case, yes please.
                 treeViewFX_sfx.setShowRoot(true);
-            } catch (IOException e) {
+
+            } catch (IOException | JsonParseException e) {
                 e.printStackTrace();
-            } catch (JsonParseException e) {
-                e.printStackTrace();
-                // Handle JSON parsing error
             }
         }
     }
 
+    //
+    // POPULATION FUNCTIONS START HERE
+    //
 
     public void populateSfx(TreeItem<String> rootItem, JsonObject jsonObject) {
+
         // Check if the JSON object contains "sfx" property
         if (jsonObject.has("sfx")) {
+
             JsonObject sfxObject = jsonObject.getAsJsonObject("sfx");
 
             // Create a TreeItem for "comments" and populate it
@@ -75,7 +97,10 @@ public class SfxDialog {
                     commentsList.add(commentsArray.get(i).getAsString());
                 }
 
+                // Create the items
                 TreeItem<String> commentsItem = new TreeItem<>("comments");
+
+                // Call populate Comments to fill the items
                 populateComments(commentsItem, commentsList);
                 rootItem.getChildren().add(commentsItem);
             }
@@ -96,7 +121,7 @@ public class SfxDialog {
                 JsonObject scrObject = sfxObject.getAsJsonObject("scr");
 
                 TreeItem<String> scrItem = new TreeItem<>("scr");
-                // You can further populate the "scr" section if needed
+                populateOriginal(scrItem, scrObject);
 
                 rootItem.getChildren().add(scrItem);
             }
@@ -131,8 +156,15 @@ public class SfxDialog {
                         if (entryElement.isJsonObject()) {
                             JsonObject entryObject = entryElement.getAsJsonObject();
 
+                            String entryLabel;
+
                             // Customize this to display entry properties as needed
-                            String entryLabel = entryObject.get("ID").getAsString();
+                            if (idOrNot == 1){
+                                entryLabel = entryObject.get("filePath").getAsString();
+                            } else {
+                                entryLabel = entryObject.get("ID").getAsString();
+                            }
+
                             TreeItem<String> entryItem = new TreeItem<>(entryLabel);
                             categoryItem.getChildren().add(entryItem);
                         }
@@ -142,8 +174,56 @@ public class SfxDialog {
         }
     }
 
+    //
+    // HANDLING OF CLICKS FUNCTIONS START HERE
+    //
 
-    // Bottom Navigation Functions
+    @FXML
+    protected void handleTreeItemClicks_sfx(){
+
+        // Select each ListView object and set them to a new JSON Object for it to be previewed
+        String valuesStrings = treeViewFX_sfx.getSelectionModel().getSelectedItem().getValue();
+        System.out.println("LMAO DEBUG:" + valuesStrings);
+        JSONObject JSONObjectStringsValues = new JSONObject(valuesStrings);
+
+        // Get all the values, strings first
+        idTextField_sfx.setText(JSONObjectStringsValues.getString("ID"));
+        priorityTextField_sfx.setText(JSONObjectStringsValues.get("priority").toString());
+        lengthAdjustTextField_sfx.setText(JSONObjectStringsValues.get("lengthAdjust").toString());
+        minVolumeTextField_sfx.setText(JSONObjectStringsValues.get("minVolume").toString());
+
+        // Get all the values, now checkboxes
+        preloadCheckBox_sfx.setSelected(JSONObjectStringsValues.getBoolean("preload"));
+        unitSpeechCheckBox_sfx.setSelected(JSONObjectStringsValues.getBoolean("unitSpeech"));
+        oneAtATimeCheckBox_sfx.setSelected(JSONObjectStringsValues.getBoolean("oneAtATime"));
+        neverPreemptCheckBox_sfx.setSelected(JSONObjectStringsValues.getBoolean("neverPreempt"));
+
+    }
+
+    //
+    // SETTINGS FUNCTIONS START HERE
+    //
+
+    @FXML
+    protected void idToggle_sfx(){
+        idRadioButton_sfx.setSelected(true);
+        filePathRadioButton_sfx.setSelected(false);
+        idOrNot = 0;
+        getJSON_sfx(globalJSON);
+    }
+
+    @FXML
+    protected void filePathToggle_sfx(){
+        idRadioButton_sfx.setSelected(false);
+        filePathRadioButton_sfx.setSelected(true);
+        idOrNot = 1;
+        getJSON_sfx(globalJSON);
+    }
+
+    //
+    // BOTTOM NAVIGATION FUNCTIONS START HERE
+    //
+
     @FXML
     protected void onCloseButton_sfxClick(){
         exit();
